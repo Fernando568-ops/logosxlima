@@ -1,122 +1,77 @@
-import pygame
-from pygame.locals import *
-from OpenGL.GL import *
-from OpenGL.GLU import *
+import streamlit as st
+import plotly.graph_objects as go
+import numpy as np
 
-# Vertices of a square plane
-vertices = (
-    (-5, 0, -5),
-    (5, 0, -5),
-    (5, 0, 5),
-    (-5, 0, 5)
+st.set_page_config(page_title="Simple 3D Plane", layout="wide")
+
+st.title("🛠️ Simple Draggable 3D Plane")
+
+# Create a square plane
+x = np.linspace(-10, 10, 2)
+y = np.linspace(-10, 10, 2)
+
+X, Y = np.meshgrid(x, y)
+Z = np.zeros_like(X)
+
+fig = go.Figure()
+
+# Plane
+fig.add_trace(
+    go.Surface(
+        x=X,
+        y=Y,
+        z=Z,
+        colorscale=[[0, "#D3D3D3"], [1, "#D3D3D3"]],
+        showscale=False,
+        opacity=0.9,
+    )
 )
 
-edges = (
-    (0, 1),
-    (1, 2),
-    (2, 3),
-    (3, 0)
+# X-axis (Red)
+fig.add_trace(
+    go.Scatter3d(
+        x=[0, 10],
+        y=[0, 0],
+        z=[0, 0],
+        mode="lines",
+        line=dict(color="red", width=8),
+        name="X"
+    )
 )
 
-def draw_plane():
-    # Filled plane
-    glColor3f(0.75, 0.75, 0.75)
-    glBegin(GL_QUADS)
-    for vertex in vertices:
-        glVertex3fv(vertex)
-    glEnd()
+# Y-axis (Green)
+fig.add_trace(
+    go.Scatter3d(
+        x=[0, 0],
+        y=[0, 10],
+        z=[0, 0],
+        mode="lines",
+        line=dict(color="green", width=8),
+        name="Y"
+    )
+)
 
-    # Outline
-    glColor3f(0, 0, 0)
-    glLineWidth(2)
-    glBegin(GL_LINES)
-    for edge in edges:
-        for vertex in edge:
-            glVertex3fv(vertices[vertex])
-    glEnd()
+# Z-axis (Blue)
+fig.add_trace(
+    go.Scatter3d(
+        x=[0, 0],
+        y=[0, 0],
+        z=[0, 10],
+        mode="lines",
+        line=dict(color="blue", width=8),
+        name="Z"
+    )
+)
 
-def draw_axes():
-    glLineWidth(3)
+fig.update_layout(
+    scene=dict(
+        xaxis=dict(range=[-10, 10]),
+        yaxis=dict(range=[-10, 10]),
+        zaxis=dict(range=[-10, 10]),
+        aspectmode="cube",
+    ),
+    margin=dict(l=0, r=0, t=30, b=0),
+    height=700,
+)
 
-    # X axis (Red)
-    glBegin(GL_LINES)
-    glColor3f(1, 0, 0)
-    glVertex3f(0, 0, 0)
-    glVertex3f(10, 0, 0)
-    glEnd()
-
-    # Y axis (Green)
-    glBegin(GL_LINES)
-    glColor3f(0, 1, 0)
-    glVertex3f(0, 0, 0)
-    glVertex3f(0, 10, 0)
-    glEnd()
-
-    # Z axis (Blue)
-    glBegin(GL_LINES)
-    glColor3f(0, 0, 1)
-    glVertex3f(0, 0, 0)
-    glVertex3f(0, 0, 10)
-    glEnd()
-
-pygame.init()
-
-display = (1000, 700)
-pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
-pygame.display.set_caption("Simple 3D Plane")
-
-gluPerspective(45, display[0] / display[1], 0.1, 100.0)
-
-glTranslatef(0, -2, -20)
-
-rot_x = 25
-rot_y = -30
-
-dragging = False
-last_mouse = (0, 0)
-
-clock = pygame.time.Clock()
-
-running = True
-while running:
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                dragging = True
-                last_mouse = pygame.mouse.get_pos()
-
-        elif event.type == pygame.MOUSEBUTTONUP:
-            if event.button == 1:
-                dragging = False
-
-        elif event.type == pygame.MOUSEMOTION and dragging:
-            x, y = pygame.mouse.get_pos()
-            dx = x - last_mouse[0]
-            dy = y - last_mouse[1]
-
-            rot_y += dx * 0.5
-            rot_x += dy * 0.5
-
-            last_mouse = (x, y)
-
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glEnable(GL_DEPTH_TEST)
-
-    glPushMatrix()
-
-    glRotatef(rot_x, 1, 0, 0)
-    glRotatef(rot_y, 0, 1, 0)
-
-    draw_axes()
-    draw_plane()
-
-    glPopMatrix()
-
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
+st.plotly_chart(fig, use_container_width=True)
