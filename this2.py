@@ -39,18 +39,6 @@ if st.sidebar.button("Add Cylinder"):
 
 if st.sidebar.button("Add Cone"):
     st.session_state.objects.append(("cone", len(st.session_state.objects)))
-    
-if st.sidebar.button("Add Cube"):
-    st.session_state.objects.append(("cube", len(st.session_state.objects)))
-
-if st.sidebar.button("Add Sphere"):
-    st.session_state.objects.append(("sphere", len(st.session_state.objects)))
-
-if st.sidebar.button("Add Cylinder"):
-    st.session_state.objects.append(("cylinder", len(st.session_state.objects)))
-
-if st.sidebar.button("Add Cone"):
-    st.session_state.objects.append(("cone", len(st.session_state.objects)))
 
 # -----------------------------
 # Figure
