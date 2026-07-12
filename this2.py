@@ -104,161 +104,199 @@ fig.add_trace(go.Scatter3d(
 # -----------------------------
 # Draw every object
 # -----------------------------
+# -----------------------------
+# Draw every object
+# -----------------------------
 
-for shape, index in st.session_state.objects:
+for obj in st.session_state.objects:
 
-    offset = index * 3
+    shape = obj["type"]
+    x0 = obj["x"]
+    y0 = obj["y"]
+    z0 = obj["z"]
+
+    # -------------------------
+    # Plane
+    # -------------------------
 
     if shape == "Plane":
 
-        x = np.linspace(-1,1,2) + offset
-        y = np.linspace(-1,1,2)
+        x = np.linspace(-1, 1, 2) + x0
+        y = np.linspace(-1, 1, 2) + y0
 
-        X,Y = np.meshgrid(x,y)
-        Z = np.zeros_like(X)
+        X, Y = np.meshgrid(x, y)
+        Z = np.zeros_like(X) + z0
 
-        fig.add_trace(go.Surface(
-            x=X,
-            y=Y,
-            z=Z,
-            showscale=False,
-            opacity=0.8,
-            colorscale=[[0,"lightgray"],[1,"lightgray"]]
-        ))
+        fig.add_trace(
+            go.Surface(
+                x=X,
+                y=Y,
+                z=Z,
+                showscale=False,
+                opacity=0.8,
+                colorscale=[[0, "lightgray"], [1, "lightgray"]]
+            )
+        )
+
+    # -------------------------
+    # Triangle
+    # -------------------------
 
     elif shape == "Triangle":
 
-        fig.add_trace(go.Mesh3d(
+        fig.add_trace(
+            go.Mesh3d(
+                x=[0+x0, 2+x0, 1+x0],
+                y=[0+y0, 0+y0, 2+y0],
+                z=[0+z0, 0+z0, 2+z0],
 
-            x=[0+offset,2+offset,1+offset],
-            y=[0,0,2],
-            z=[0,0,2],
+                color="red",
+                opacity=0.8
+            )
+        )
 
-            color="red",
-            opacity=.8
-        ))
+    # -------------------------
+    # Rectangle
+    # -------------------------
 
     elif shape == "Rectangle":
 
-        fig.add_trace(go.Surface(
+        fig.add_trace(
+            go.Surface(
+                x=[
+                    [0+x0, 2+x0],
+                    [0+x0, 2+x0]
+                ],
 
-            x=[[0+offset,2+offset],
-               [0+offset,2+offset]],
+                y=[
+                    [0+y0, 0+y0],
+                    [2+y0, 2+y0]
+                ],
 
-            y=[[0,0],
-               [2,2]],
+                z=[
+                    [1+z0, 1+z0],
+                    [1+z0, 1+z0]
+                ],
 
-            z=[[1,1],
-               [1,1]],
+                colorscale=[[0, "blue"], [1, "blue"]],
+                showscale=False,
+                opacity=0.8
+            )
+        )
 
-            colorscale=[[0,"blue"],[1,"blue"]],
-            showscale=False,
-            opacity=.8
-        ))
+    # -------------------------
+    # Cube
+    # -------------------------
 
     elif shape == "Cube":
 
-        x0 = offset
-    
         vertices = np.array([
-            [0+x0,0,0],
-            [1+x0,0,0],
-            [1+x0,1,0],
-            [0+x0,1,0],
-            [0+x0,0,1],
-            [1+x0,0,1],
-            [1+x0,1,1],
-            [0+x0,1,1]
+            [0+x0, 0+y0, 0+z0],
+            [1+x0, 0+y0, 0+z0],
+            [1+x0, 1+y0, 0+z0],
+            [0+x0, 1+y0, 0+z0],
+            [0+x0, 0+y0, 1+z0],
+            [1+x0, 0+y0, 1+z0],
+            [1+x0, 1+y0, 1+z0],
+            [0+x0, 1+y0, 1+z0]
         ])
-    
+
         edges = [
             (0,1),(1,2),(2,3),(3,0),
             (4,5),(5,6),(6,7),(7,4),
             (0,4),(1,5),(2,6),(3,7)
         ]
-    
+
         for e in edges:
-    
+
             fig.add_trace(
                 go.Scatter3d(
-    
-                    x=[vertices[e[0]][0],vertices[e[1]][0]],
-                    y=[vertices[e[0]][1],vertices[e[1]][1]],
-                    z=[vertices[e[0]][2],vertices[e[1]][2]],
-    
+                    x=[vertices[e[0]][0], vertices[e[1]][0]],
+                    y=[vertices[e[0]][1], vertices[e[1]][1]],
+                    z=[vertices[e[0]][2], vertices[e[1]][2]],
                     mode="lines",
-    
-                    line=dict(width=6,color="black"),
-    
+                    line=dict(width=6, color="black"),
                     showlegend=False
                 )
             )
 
+    # -------------------------
+    # Sphere
+    # -------------------------
+
     elif shape == "Sphere":
 
-        u = np.linspace(0,2*np.pi,40)
-        v = np.linspace(0,np.pi,20)
-    
-        x = np.outer(np.cos(u),np.sin(v)) + offset
-        y = np.outer(np.sin(u),np.sin(v))
-        z = np.outer(np.ones(np.size(u)),np.cos(v))
-    
+        u = np.linspace(0, 2*np.pi, 40)
+        v = np.linspace(0, np.pi, 20)
+
+        x = np.outer(np.cos(u), np.sin(v)) + x0
+        y = np.outer(np.sin(u), np.sin(v)) + y0
+        z = np.outer(np.ones(np.size(u)), np.cos(v)) + z0
+
         fig.add_trace(
             go.Surface(
                 x=x,
                 y=y,
                 z=z,
-                opacity=.8,
+                opacity=0.8,
                 colorscale="Viridis",
                 showscale=False
             )
         )
 
+    # -------------------------
+    # Cylinder
+    # -------------------------
+
     elif shape == "Cylinder":
 
-        theta = np.linspace(0,2*np.pi,40)
-        z = np.linspace(0,2,20)
-    
-        theta,z = np.meshgrid(theta,z)
-    
-        x = np.cos(theta)+offset
-        y = np.sin(theta)
-    
+        theta = np.linspace(0, 2*np.pi, 40)
+        z = np.linspace(0, 2, 20)
+
+        theta, z = np.meshgrid(theta, z)
+
+        x = np.cos(theta) + x0
+        y = np.sin(theta) + y0
+        z = z + z0
+
         fig.add_trace(
             go.Surface(
                 x=x,
                 y=y,
                 z=z,
-                opacity=.8,
+                opacity=0.8,
                 colorscale="Blues",
                 showscale=False
             )
         )
 
+    # -------------------------
+    # Cone
+    # -------------------------
+
     elif shape == "Cone":
 
-        theta = np.linspace(0,2*np.pi,40)
-        h = np.linspace(0,2,20)
-    
-        theta,h = np.meshgrid(theta,h)
-    
-        r = 1-h/2
-    
-        x = r*np.cos(theta)+offset
-        y = r*np.sin(theta)
-        z = h
-    
+        theta = np.linspace(0, 2*np.pi, 40)
+        h = np.linspace(0, 2, 20)
+
+        theta, h = np.meshgrid(theta, h)
+
+        r = 1 - h/2
+
+        x = r*np.cos(theta) + x0
+        y = r*np.sin(theta) + y0
+        z = h + z0
+
         fig.add_trace(
             go.Surface(
                 x=x,
                 y=y,
                 z=z,
-                opacity=.8,
+                opacity=0.8,
                 colorscale="Reds",
                 showscale=False
             )
         )
-
 # -----------------------------
 # Layout
 # -----------------------------
