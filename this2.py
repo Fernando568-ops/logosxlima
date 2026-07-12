@@ -28,6 +28,19 @@ if st.session_state.selected is not None:
 
     st.sidebar.success(f"Selected: {obj['type']}")
 
+st.sidebar.markdown("---")
+st.sidebar.subheader("Move")
+
+col1, col2 = st.sidebar.columns(2)
+
+with col1:
+    if st.button("⬅ Left"):
+        st.session_state.objects[st.session_state.selected]["x"] -= 1
+
+with col2:
+    if st.button("Right ➡"):
+        st.session_state.objects[st.session_state.selected]["x"] += 1
+
 if st.sidebar.button("Add Plane"):
     st.session_state.objects.append({
         "type": "Plane",
