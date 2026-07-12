@@ -28,6 +28,28 @@ if st.sidebar.button("Add Triangle"):
 if st.sidebar.button("Add Rectangle"):
     st.session_state.objects.append(("rectangle", len(st.session_state.objects)))
 
+if st.sidebar.button("Add Cube"):
+    st.session_state.objects.append(("cube", len(st.session_state.objects)))
+
+if st.sidebar.button("Add Sphere"):
+    st.session_state.objects.append(("sphere", len(st.session_state.objects)))
+
+if st.sidebar.button("Add Cylinder"):
+    st.session_state.objects.append(("cylinder", len(st.session_state.objects)))
+
+if st.sidebar.button("Add Cone"):
+    st.session_state.objects.append(("cone", len(st.session_state.objects)))if st.sidebar.button("Add Cube"):
+    st.session_state.objects.append(("cube", len(st.session_state.objects)))
+
+if st.sidebar.button("Add Sphere"):
+    st.session_state.objects.append(("sphere", len(st.session_state.objects)))
+
+if st.sidebar.button("Add Cylinder"):
+    st.session_state.objects.append(("cylinder", len(st.session_state.objects)))
+
+if st.sidebar.button("Add Cone"):
+    st.session_state.objects.append(("cone", len(st.session_state.objects)))
+
 # -----------------------------
 # Figure
 # -----------------------------
@@ -108,6 +130,109 @@ for shape, index in st.session_state.objects:
             showscale=False,
             opacity=.8
         ))
+
+    elif shape == "cube":
+
+        x0 = offset
+    
+        vertices = np.array([
+            [0+x0,0,0],
+            [1+x0,0,0],
+            [1+x0,1,0],
+            [0+x0,1,0],
+            [0+x0,0,1],
+            [1+x0,0,1],
+            [1+x0,1,1],
+            [0+x0,1,1]
+        ])
+    
+        edges = [
+            (0,1),(1,2),(2,3),(3,0),
+            (4,5),(5,6),(6,7),(7,4),
+            (0,4),(1,5),(2,6),(3,7)
+        ]
+    
+        for e in edges:
+    
+            fig.add_trace(
+                go.Scatter3d(
+    
+                    x=[vertices[e[0]][0],vertices[e[1]][0]],
+                    y=[vertices[e[0]][1],vertices[e[1]][1]],
+                    z=[vertices[e[0]][2],vertices[e[1]][2]],
+    
+                    mode="lines",
+    
+                    line=dict(width=6,color="black"),
+    
+                    showlegend=False
+                )
+            )
+
+    elif shape == "sphere":
+
+        u = np.linspace(0,2*np.pi,40)
+        v = np.linspace(0,np.pi,20)
+    
+        x = np.outer(np.cos(u),np.sin(v)) + offset
+        y = np.outer(np.sin(u),np.sin(v))
+        z = np.outer(np.ones(np.size(u)),np.cos(v))
+    
+        fig.add_trace(
+            go.Surface(
+                x=x,
+                y=y,
+                z=z,
+                opacity=.8,
+                colorscale="Viridis",
+                showscale=False
+            )
+        )
+
+    elif shape == "cylinder":
+
+        theta = np.linspace(0,2*np.pi,40)
+        z = np.linspace(0,2,20)
+    
+        theta,z = np.meshgrid(theta,z)
+    
+        x = np.cos(theta)+offset
+        y = np.sin(theta)
+    
+        fig.add_trace(
+            go.Surface(
+                x=x,
+                y=y,
+                z=z,
+                opacity=.8,
+                colorscale="Blues",
+                showscale=False
+            )
+        )
+
+    elif shape == "cone":
+
+        theta = np.linspace(0,2*np.pi,40)
+        h = np.linspace(0,2,20)
+    
+        theta,h = np.meshgrid(theta,h)
+    
+        r = 1-h/2
+    
+        x = r*np.cos(theta)+offset
+        y = r*np.sin(theta)
+        z = h
+    
+        fig.add_trace(
+            go.Surface(
+                x=x,
+                y=y,
+                z=z,
+                opacity=.8,
+                colorscale="Reds",
+                showscale=False
+            )
+        )
 
 # -----------------------------
 # Layout
