@@ -109,7 +109,7 @@ for shape, index in st.session_state.objects:
 
     offset = index * 3
 
-    if shape == "plane":
+    if shape == "Plane":
 
         x = np.linspace(-1,1,2) + offset
         y = np.linspace(-1,1,2)
@@ -126,7 +126,7 @@ for shape, index in st.session_state.objects:
             colorscale=[[0,"lightgray"],[1,"lightgray"]]
         ))
 
-    elif shape == "triangle":
+    elif shape == "Triangle":
 
         fig.add_trace(go.Mesh3d(
 
@@ -138,7 +138,7 @@ for shape, index in st.session_state.objects:
             opacity=.8
         ))
 
-    elif shape == "rectangle":
+    elif shape == "Rectangle":
 
         fig.add_trace(go.Surface(
 
@@ -156,7 +156,7 @@ for shape, index in st.session_state.objects:
             opacity=.8
         ))
 
-    elif shape == "cube":
+    elif shape == "Cube":
 
         x0 = offset
     
@@ -194,7 +194,7 @@ for shape, index in st.session_state.objects:
                 )
             )
 
-    elif shape == "sphere":
+    elif shape == "Sphere":
 
         u = np.linspace(0,2*np.pi,40)
         v = np.linspace(0,np.pi,20)
@@ -214,7 +214,7 @@ for shape, index in st.session_state.objects:
             )
         )
 
-    elif shape == "cylinder":
+    elif shape == "Cylinder":
 
         theta = np.linspace(0,2*np.pi,40)
         z = np.linspace(0,2,20)
@@ -235,7 +235,7 @@ for shape, index in st.session_state.objects:
             )
         )
 
-    elif shape == "cone":
+    elif shape == "Cone":
 
         theta = np.linspace(0,2*np.pi,40)
         h = np.linspace(0,2,20)
