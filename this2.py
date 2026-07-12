@@ -20,25 +20,60 @@ if "objects" not in st.session_state:
 st.sidebar.title("Shapes")
 
 if st.sidebar.button("Add Plane"):
-    st.session_state.objects.append(("plane", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Plane",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 if st.sidebar.button("Add Triangle"):
-    st.session_state.objects.append(("triangle", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Triangle",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 if st.sidebar.button("Add Rectangle"):
-    st.session_state.objects.append(("rectangle", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Rectangle",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 if st.sidebar.button("Add Cube"):
-    st.session_state.objects.append(("cube", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Cube",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 if st.sidebar.button("Add Sphere"):
-    st.session_state.objects.append(("sphere", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Sphere",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 if st.sidebar.button("Add Cylinder"):
-    st.session_state.objects.append(("cylinder", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Cylinder",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 if st.sidebar.button("Add Cone"):
-    st.session_state.objects.append(("cone", len(st.session_state.objects)))
+    st.session_state.objects.append({
+        "type": "Cone",
+        "x":0,
+        "y":0,
+        "z":0
+    })
 
 # -----------------------------
 # Figure
