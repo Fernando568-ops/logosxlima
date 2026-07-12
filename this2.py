@@ -13,11 +13,20 @@ st.title("Mini CAD")
 if "objects" not in st.session_state:
     st.session_state.objects = []
 
+if "selected" not in st.session_state:
+    st.session_state.selected = None
+
 # -----------------------------
 # Sidebar
 # -----------------------------
 
 st.sidebar.title("Shapes")
+
+if st.session_state.selected is not None:
+
+    obj = st.session_state.objects[st.session_state.selected]
+
+    st.sidebar.success(f"Selected: {obj['type']}")
 
 if st.sidebar.button("Add Plane"):
     st.session_state.objects.append({
@@ -74,6 +83,15 @@ if st.sidebar.button("Add Cone"):
         "y":0,
         "z":0
     })
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("Objects")
+
+for i, obj in enumerate(st.session_state.objects):
+
+    if st.sidebar.button(f"Select {obj['type']} {i+1}"):
+
+        st.session_state.selected = i
 
 # -----------------------------
 # Figure
