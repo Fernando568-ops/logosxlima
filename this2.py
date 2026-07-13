@@ -118,6 +118,21 @@ if st.sidebar.button("Clear Points"):
 
     st.session_state.points = []
 
+if st.sidebar.button("Extrude"):
+        st.session_state.extrude = True
+
+if "extrude" not in st.session_state:
+        st.session_state.extrude = False
+
+if len(st.session_state.points) >= 4:
+
+        xs = [p[0] for p in st.session_state.points]
+        ys = [p[1] for p in st.session_state.points]
+    
+        xs.append(xs[0])
+        ys.append(ys[0])
+
+
 st.sidebar.write("Current Points")
 
 for i, p in enumerate(st.session_state.points):
@@ -132,7 +147,6 @@ for i, obj in enumerate(st.session_state.objects):
     if st.sidebar.button(f"Select {obj['type']} {i+1}"):
 
         st.session_state.selected = i
-
 # -----------------------------
 # Figure
 # -----------------------------
