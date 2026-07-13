@@ -376,19 +376,85 @@ for obj in st.session_state.objects:
 # Draw Custom Polygon
 # -----------------------------
 
-if len(st.session_state.points) >= 2:
+if len(st.session_state.points) == 4:
 
-    xs = [p[0] for p in st.session_state.points]
-    ys = [p[1] for p in st.session_state.points]
-    zs = [0 for _ in st.session_state.points]
-    
-    xs.append(xs[0])
-    ys.append(ys[0])
-    zs.append(0)
+    pts = st.session_state.points
 
-    fig.add_trace(
+    height = 2
 
-        go.Scatter3d(
+    # Bottom
+    xb = [p[0] for p in pts]
+    yb = [p[1] for p in pts]
+    zb = [0,0,0,0]
+
+    # Top
+    xt = xb
+    yt = yb
+    zt = [height]*4
+
+    # Draw sketch if not extruded
+
+    if not st.session_state.extrude:
+
+        fig.add_trace(
+            go.Scatter3d(
+
+                x=xb+[xb[0]],
+                y=yb+[yb[0]],
+                z=zb+[0],
+
+                mode="lines+markers",
+
+                line=dict(width=5),
+
+                marker=dict(size=5)
+            )
+        )
+
+    else:
+
+        # Bottom face
+
+        fig.add_trace(go.Mesh3d(
+            x=xb,
+            y=yb,
+            z=zb,
+
+            color="lightblue",
+            opacity=0.5
+        ))
+
+        # Top face
+
+        fig.add_trace(go.Mesh3d(
+            x=xt,
+            y=yt,
+            z=zt,
+
+            color="lightblue",
+            opacity=0.5
+        ))
+
+        # Vertical edges
+
+        for i in range(4):
+
+            fig.add_trace(
+
+                go.Scatter3d(
+
+                    x=[xb[i],xt[i]],
+                    y=[yb[i],yt[i]],
+                    z=[0,height],
+
+                    mode="lines",
+
+                    line=dict(width=6,color="black"),
+
+                    showlegend=False
+                )
+
+            )
 
             x=xs,
             y=ys,
