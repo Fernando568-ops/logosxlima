@@ -97,6 +97,33 @@ if st.sidebar.button("Add Cone"):
         "z":0
     })
 
+# -----------------------------
+# Draw Custom Shape
+# -----------------------------
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("Draw Shape")
+
+if "points" not in st.session_state:
+    st.session_state.points = []
+
+x = st.sidebar.number_input("X", value=0.0, step=1.0)
+y = st.sidebar.number_input("Y", value=0.0, step=1.0)
+
+if st.sidebar.button("Add Point"):
+
+    st.session_state.points.append((x, y))
+
+if st.sidebar.button("Clear Points"):
+
+    st.session_state.points = []
+
+st.sidebar.write("Current Points")
+
+for i, p in enumerate(st.session_state.points):
+
+    st.sidebar.write(f"{i+1}. ({p[0]}, {p[1]})")
+
 st.sidebar.markdown("---")
 st.sidebar.subheader("Objects")
 
@@ -331,6 +358,39 @@ for obj in st.session_state.objects:
 # -----------------------------
 # Layout
 # -----------------------------
+# -----------------------------
+# Draw Custom Polygon
+# -----------------------------
+
+if len(st.session_state.points) >= 2:
+
+    xs = [p[0] for p in st.session_state.points]
+    ys = [p[1] for p in st.session_state.points]
+    zs = [0 for _ in st.session_state.points]
+    
+    xs.append(xs[0])
+    ys.append(ys[0])
+    zs.append(0)
+
+    fig.add_trace(
+
+        go.Scatter3d(
+
+            x=xs,
+            y=ys,
+            z=zs,
+
+            mode="lines+markers",
+
+            line=dict(width=6),
+
+            marker=dict(size=5),
+
+            name="Sketch"
+
+        )
+
+    )
 
 fig.update_layout(
 
