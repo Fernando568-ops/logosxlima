@@ -376,7 +376,7 @@ for obj in st.session_state.objects:
 # Draw Custom Polygon
 # -----------------------------
 
-if len(st.session_state.points) >= 2::
+if len(st.session_state.points) >= 2:
 
     pts = st.session_state.points
 
