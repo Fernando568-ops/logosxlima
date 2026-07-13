@@ -468,10 +468,6 @@ if len(st.session_state.points) == 4:
 
             name="Sketch"
 
-         )
-
-     )
-
 fig.update_layout(
 
 scene=dict(
