@@ -124,7 +124,7 @@ if st.sidebar.button("Extrude"):
 if "extrude" not in st.session_state:
         st.session_state.extrude = False
 
-if len(st.session_state.points) >= 4:
+if len(st.session_state.points) >= 2:
 
         xs = [p[0] for p in st.session_state.points]
         ys = [p[1] for p in st.session_state.points]
@@ -376,7 +376,7 @@ for obj in st.session_state.objects:
 # Draw Custom Polygon
 # -----------------------------
 
-if len(st.session_state.points) == 4:
+if len(st.session_state.points) >= 2::
 
     pts = st.session_state.points
 
@@ -391,6 +391,7 @@ if len(st.session_state.points) == 4:
     xt = xb
     yt = yb
     zt = [height]*4
+
 
     # Draw sketch if not extruded
 
@@ -455,18 +456,6 @@ if len(st.session_state.points) == 4:
                 )
 
             )
-
-            x=xs,
-            y=ys,
-            z=zs,
-
-            mode="lines+markers",
-
-            line=dict(width=6),
-
-            marker=dict(size=5),
-
-            name="Sketch"
 
 fig.update_layout(
 
