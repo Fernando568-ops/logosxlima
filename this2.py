@@ -41,6 +41,9 @@ if st.session_state.selected is not None:
         if st.button("Right ➡"):
             st.session_state.objects[st.session_state.selected]["x"] += 1
 
+if "extrude_height" not in st.session_state:
+    st.session_state.extrude_height = 2.0
+
 if st.sidebar.button("Add Plane"):
     st.session_state.objects.append({
         "type": "Plane",
@@ -119,7 +122,19 @@ if st.sidebar.button("Clear Points"):
     st.session_state.points = []
 
 if st.sidebar.button("Extrude"):
-        st.session_state.extrude = True
+
+    st.session_state.extrude = True
+    st.session_state.extrude_height = height
+
+if st.sidebar.subheader("Extrusion")
+
+height = st.sidebar.slider(
+    "Height",
+    min_value=0.5,
+    max_value=10.0,
+    value=2.0,
+    step=0.5
+)
 
 if "extrude" not in st.session_state:
         st.session_state.extrude = False
