@@ -126,7 +126,7 @@ if st.sidebar.button("Extrude"):
     st.session_state.extrude = True
     st.session_state.extrude_height = height
 
-if st.sidebar.subheader("Extrusion"):
+st.sidebar.subheader("Extrusion"):
 
 height = st.sidebar.slider(
     "Height",
