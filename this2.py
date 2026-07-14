@@ -121,11 +121,6 @@ if st.sidebar.button("Clear Points"):
 
     st.session_state.points = []
 
-if st.sidebar.button("Extrude"):
-
-    st.session_state.extrude = True
-    st.session_state.extrude_height = height
-
 st.sidebar.subheader("Extrusion")
 
 height = st.sidebar.slider(
@@ -135,6 +130,11 @@ height = st.sidebar.slider(
     value=2.0,
     step=0.5
 )
+
+if st.sidebar.button("Extrude"):
+
+    st.session_state.extrude = True
+    st.session_state.extrude_height = height
 
 if "extrude" not in st.session_state:
         st.session_state.extrude = False
