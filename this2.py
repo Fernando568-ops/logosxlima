@@ -453,8 +453,13 @@ if len(st.session_state.points) >= 2:
 
         # Vertical edges
 
-        for i in range(4):
-
+        for i in range(len(xb)):
+            st.write("Points:", st.session_state.points)
+            st.write("Bottom X:", xb)
+            st.write("Top X:", xt)
+            st.write("Length xb:", len(xb))
+            st.write("Length xt:", len(xt))
+            
             fig.add_trace(
 
                 go.Scatter3d(
