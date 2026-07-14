@@ -13,6 +13,9 @@ st.title("Mini CAD")
 if "objects" not in st.session_state:
     st.session_state.objects = []
 
+if "history" not in st.session_state:
+    st.session_state.history = []
+
 if "selected" not in st.session_state:
     st.session_state.selected = None
 
@@ -36,10 +39,30 @@ if st.session_state.selected is not None:
     with col1:
         if st.button("⬅ Left"):
             st.session_state.objects[st.session_state.selected]["x"] -= 1
+
+            st.session_state.history.append({
+
+                "operation":"Move",
+        
+                "axis":"X",
+        
+                "amount":-1
+
+    })
     
     with col2:
         if st.button("Right ➡"):
             st.session_state.objects[st.session_state.selected]["x"] += 1
+
+            st.session_state.history.append({
+
+                "operation":"Move",
+        
+                "axis":"X",
+        
+                "amount":1
+
+    })
 
 if "extrude_height" not in st.session_state:
     st.session_state.extrude_height = 2.0
@@ -52,12 +75,27 @@ if st.sidebar.button("Add Plane"):
         "z":0
     })
 
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Plane"
+
+    })
+
 if st.sidebar.button("Add Triangle"):
     st.session_state.objects.append({
         "type": "Triangle",
         "x":0,
         "y":0,
         "z":0
+    })
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Triangle"
+
     })
 
 if st.sidebar.button("Add Rectangle"):
@@ -67,6 +105,13 @@ if st.sidebar.button("Add Rectangle"):
         "y":0,
         "z":0
     })
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Rectangle"
+
+    })
 
 if st.sidebar.button("Add Cube"):
     st.session_state.objects.append({
@@ -74,6 +119,13 @@ if st.sidebar.button("Add Cube"):
         "x":0,
         "y":0,
         "z":0
+    })
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Cube"
+
     })
 
 if st.sidebar.button("Add Sphere"):
@@ -83,6 +135,13 @@ if st.sidebar.button("Add Sphere"):
         "y":0,
         "z":0
     })
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Sphere"
+
+    })
 
 if st.sidebar.button("Add Cylinder"):
     st.session_state.objects.append({
@@ -91,6 +150,13 @@ if st.sidebar.button("Add Cylinder"):
         "y":0,
         "z":0
     })
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Cylinder"
+
+    })
 
 if st.sidebar.button("Add Cone"):
     st.session_state.objects.append({
@@ -98,6 +164,13 @@ if st.sidebar.button("Add Cone"):
         "x":0,
         "y":0,
         "z":0
+    })
+    st.session_state.history.append({
+
+    "operation":"Add Object",
+
+    "type":"Cone"
+
     })
 
 # -----------------------------
@@ -117,6 +190,12 @@ if st.sidebar.button("Add Point"):
 
     st.session_state.points.append((x, y))
 
+    st.session_state.history.append({
+        "operation": "Add Point",
+        "x": x,
+        "y": y
+    })
+
 if st.sidebar.button("Clear Points"):
 
     st.session_state.points = []
@@ -132,9 +211,16 @@ height = st.sidebar.slider(
 )
 
 if st.sidebar.button("Extrude"):
-
     st.session_state.extrude = True
     st.session_state.extrude_height = height
+
+    st.session_state.history.append({
+
+        "operation": "Extrude",
+
+        "height": height
+
+    })
 
 if "extrude" not in st.session_state:
         st.session_state.extrude = False
@@ -156,6 +242,13 @@ for i, p in enumerate(st.session_state.points):
 
 st.sidebar.markdown("---")
 st.sidebar.subheader("Objects")
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("History")
+
+for i, action in enumerate(st.session_state.history):
+
+    st.sidebar.write(f"{i+1}. {action}")
 
 for i, obj in enumerate(st.session_state.objects):
 
