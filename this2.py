@@ -484,6 +484,44 @@ for obj in st.session_state.objects:
 # Draw Custom Polygon
 # -----------------------------
 
+# -----------------------------
+# Command Console
+# -----------------------------
+
+st.sidebar.markdown("---")
+st.sidebar.subheader("Command Console")
+
+command = st.sidebar.text_input("Command")
+
+run = st.sidebar.button("Run Command")
+if run:
+
+    command = command.strip().upper()
+
+    if command == "ADD CUBE":
+
+        st.session_state.objects.append({
+
+            "type": "Cube",
+            "x": 0,
+            "y": 0,
+            "z": 0
+
+        })
+
+        st.session_state.history.append({
+
+            "operation": "Command",
+            "command": command
+
+        })
+
+        st.sidebar.success("Cube created!")
+
+    else:
+
+        st.sidebar.error("Unknown command.")
+        
 if len(st.session_state.points) >= 2:
 
     pts = st.session_state.points
