@@ -509,6 +509,8 @@ if run:
 
         })
 
+        st.write(st.session_state.objects)
+
         st.session_state.history.append({
 
             "operation": "Command",
