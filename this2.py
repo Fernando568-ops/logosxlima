@@ -118,7 +118,7 @@ if st.sidebar.button("Add Cube"):
         "type": "Cube",
         "x":0,
         "y":0,
-        "z":0
+        "z":0,
     })
     st.session_state.history.append({
 
@@ -369,6 +369,8 @@ for obj in st.session_state.objects:
     # -------------------------
 
     elif shape == "Cube":
+
+        st.write("Drawing cube")
 
         vertices = np.array([
             [0+x0, 0+y0, 0+z0],
