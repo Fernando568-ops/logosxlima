@@ -291,19 +291,18 @@ if submitted:
     else:
 
         st.sidebar.error("Unknown command.")
-        
-if run:
     
-    command = command.strip().upper()
+    
+command = command.strip().upper()
 
-    if command == "ADD CUBE":
+if command == "ADD CUBE":
 
-        st.session_state.objects.append({
+    st.session_state.objects.append({
 
-            "type": "Cube",
-            "x": 0,
-            "y": 0,
-            "z": 0
+        "type": "Cube",
+        "x": 0,
+        "y": 0,
+        "z": 0
 
         })
 
