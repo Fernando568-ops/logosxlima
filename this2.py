@@ -278,14 +278,14 @@ if run:
             "y": 0,
             "z": 0
 
-            })
+        })
 
-            st.write(st.session_state.objects)
+        st.write(st.session_state.objects)
 
-            st.session_state.history.append({
+        st.session_state.history.append({
 
-                "operation": "Command",
-                "command": command
+            "operation": "Command",
+            "command": command
 
             })
 
