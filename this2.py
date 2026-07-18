@@ -271,6 +271,7 @@ with st.sidebar.form("command_form"):
 if command.startswith("ADD "):
 
     shape = command[4:].title()
+    st.write("Shape:", repr(shape))
 
     allowed_shapes = [
         "Cube",
