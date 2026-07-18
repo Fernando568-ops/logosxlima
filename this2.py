@@ -306,12 +306,12 @@ if command == "ADD CUBE":
 
         })
 
-        st.session_state.history.append({
+    st.session_state.history.append({
 
-            "operation": "Command",
-            "command": command
+        "operation": "Command",
+        "command": command
 
-            })
+        })
 
         st.sidebar.success("Cube created!")
 
