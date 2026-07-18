@@ -273,30 +273,34 @@ if command.startswith("ADD "):
     shape = command[4:].title()
 
     allowed_shapes = [
-            "Cube",
-            "Sphere",
-            "Cylinder",
-            "Cone",
-            "Plane",
-            "Rectangle",
-            "Triangle"
-        ]
+        "Cube",
+        "Sphere",
+        "Cylinder",
+        "Cone",
+        "Plane",
+        "Rectangle",
+        "Triangle"
+    ]
 
     if shape in allowed_shapes:
 
-            st.session_state.objects.append({
-                "type": shape,
-                "x": 0,
-                "y": 0,
-                "z": 0
+        st.session_state.objects.append({
+            "type": shape,
+            "x": 0,
+            "y": 0,
+            "z": 0
         })
 
         st.session_state.history.append({
             "operation": "Command",
             "command": command
-            })
+        })
 
         st.rerun()
+
+    else:
+
+        st.sidebar.error("Unknown shape.")
 
     else:
 
