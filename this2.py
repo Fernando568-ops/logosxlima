@@ -265,7 +265,8 @@ command = st.sidebar.text_input("Command")
 
 run = st.sidebar.button("Run Command")
 if run:
-
+    
+    st.write("Command =", repr(command))
     command = command.strip().upper()
 
     if command == "ADD CUBE":
