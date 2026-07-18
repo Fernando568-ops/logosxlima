@@ -291,34 +291,6 @@ if submitted:
     else:
 
         st.sidebar.error("Unknown command.")
-    
-    
-command = command.strip().upper()
-
-if command == "ADD CUBE":
-
-    st.session_state.objects.append({
-
-        "type": "Cube",
-        "x": 0,
-        "y": 0,
-        "z": 0
-
-        })
-
-    st.session_state.history.append({
-
-        "operation": "Command",
-        "command": command
-
-        })
-
-    st.sidebar.success("Cube created!")
-
-else:
-
-    st.sidebar.error("Unknown command.")
-        
 
 fig = go.Figure()
 
