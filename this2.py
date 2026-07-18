@@ -272,7 +272,7 @@ if command.startswith("ADD "):
 
     shape = command[4:].title()
 
-     allowed_shapes = [
+    allowed_shapes = [
             "Cube",
             "Sphere",
             "Cylinder",
