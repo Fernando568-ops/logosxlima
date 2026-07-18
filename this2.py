@@ -294,7 +294,7 @@ if command.startswith("ADD "):
         st.session_state.history.append({
             "operation": "Command",
             "command": command
-        })
+            })
 
         st.rerun()
 
