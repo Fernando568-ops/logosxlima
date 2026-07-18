@@ -289,7 +289,7 @@ if run:
 
             })
 
-            st.sidebar.success("Cube created!")
+        st.sidebar.success("Cube created!")
 
     else:
 
