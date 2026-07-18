@@ -272,10 +272,24 @@ if submitted:
 
     command = command.strip().upper()
 
-    if command == "ADD CUBE":
+    if command.startswith("ADD "):
+
+    shape = command[4:].title()
+
+    allowed_shapes = [
+        "Cube",
+        "Sphere",
+        "Cylinder",
+        "Cone",
+        "Plane",
+        "Rectangle",
+        "Triangle"
+    ]
+
+    if shape in allowed_shapes:
 
         st.session_state.objects.append({
-            "type": "Cube",
+            "type": shape,
             "x": 0,
             "y": 0,
             "z": 0
@@ -290,7 +304,7 @@ if submitted:
 
     else:
 
-        st.sidebar.error("Unknown command.")
+        st.sidebar.error("Unknown shape.")
 
 fig = go.Figure()
 
