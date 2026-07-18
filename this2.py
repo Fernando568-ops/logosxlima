@@ -302,10 +302,6 @@ if command.startswith("ADD "):
 
         st.sidebar.error("Unknown shape.")
 
-    else:
-
-        st.sidebar.error("Unknown shape.")
-
 fig = go.Figure()
 
 # Axes
