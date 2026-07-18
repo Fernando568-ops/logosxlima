@@ -313,11 +313,11 @@ if command == "ADD CUBE":
 
         })
 
-        st.sidebar.success("Cube created!")
+    st.sidebar.success("Cube created!")
 
-    else:
+else:
 
-        st.sidebar.error("Unknown command.")
+    st.sidebar.error("Unknown command.")
         
 
 fig = go.Figure()
