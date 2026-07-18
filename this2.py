@@ -257,16 +257,43 @@ for i, obj in enumerate(st.session_state.objects):
         st.session_state.selected = i
 # -----------------------------
 # Figure
-# -----------------------------
+#------------------------------
+
 st.sidebar.markdown("---")
 st.sidebar.subheader("Command Console")
 
-command = st.sidebar.text_input("Command")
+with st.sidebar.form("command_form"):
 
-run = st.sidebar.button("Run Command")
+    command = st.text_input("Command")
+
+    submitted = st.form_submit_button("Run Command")
+
+if submitted:
+
+    command = command.strip().upper()
+
+    if command == "ADD CUBE":
+
+        st.session_state.objects.append({
+            "type": "Cube",
+            "x": 0,
+            "y": 0,
+            "z": 0
+        })
+
+        st.session_state.history.append({
+            "operation": "Command",
+            "command": command
+        })
+
+        st.rerun()
+
+    else:
+
+        st.sidebar.error("Unknown command.")
+        
 if run:
     
-    st.write("Command =", repr(command))
     command = command.strip().upper()
 
     if command == "ADD CUBE":
@@ -279,8 +306,6 @@ if run:
             "z": 0
 
         })
-
-        st.write(st.session_state.objects)
 
         st.session_state.history.append({
 
@@ -406,8 +431,6 @@ for obj in st.session_state.objects:
     # -------------------------
 
     elif shape == "Cube":
-
-        st.write("Drawing cube")
 
         vertices = np.array([
             [0+x0, 0+y0, 0+z0],
