@@ -268,40 +268,47 @@ with st.sidebar.form("command_form"):
 
     submitted = st.form_submit_button("Run Command")
 
-if command.startswith("ADD "):
+if submitted:
 
-    shape = command[4:].title()
-    st.write("Shape:", repr(shape))
+    command = command.strip().upper()
 
-    allowed_shapes = [
-        "Cube",
-        "Sphere",
-        "Cylinder",
-        "Cone",
-        "Plane",
-        "Rectangle",
-        "Triangle"
-    ]
+    if command.startswith("ADD "):
 
-    if shape in allowed_shapes:
+        shape = command[4:].title()
 
-        st.session_state.objects.append({
-            "type": shape,
-            "x": 0,
-            "y": 0,
-            "z": 0
-        })
+        allowed_shapes = [
+            "Cube",
+            "Sphere",
+            "Cylinder",
+            "Cone",
+            "Plane",
+            "Rectangle",
+            "Triangle"
+        ]
 
-        st.session_state.history.append({
-            "operation": "Command",
-            "command": command
-        })
+        if shape in allowed_shapes:
 
-        st.rerun()
+            st.session_state.objects.append({
+                "type": shape,
+                "x": 0,
+                "y": 0,
+                "z": 0
+            })
+
+            st.session_state.history.append({
+                "operation": "Command",
+                "command": command
+            })
+
+            st.rerun()
+
+        else:
+
+            st.sidebar.error(f"Unknown shape: {shape}")
 
     else:
 
-        st.sidebar.error("Unknown shape.")
+        st.sidebar.error("Unknown command.")
 
 fig = go.Figure()
 
